@@ -214,6 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Ensure all cards are 100% visible immediately on initial load
   categoryCards.forEach(card => {
+    card.classList.remove('is-hidden');
     card.style.display = 'flex';
     card.style.opacity = '1';
     card.style.visibility = 'visible';
@@ -229,16 +230,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
       categoryCards.forEach(card => {
         const cardCategory = card.getAttribute('data-category');
-        if (filterValue === 'all' || cardCategory === filterValue) {
+        const matches = (filterValue === 'all' || cardCategory === filterValue);
+
+        if (matches) {
+          card.classList.remove('is-hidden');
           card.style.display = 'flex';
           card.style.visibility = 'visible';
+          card.style.opacity = '1';
           if (typeof gsap !== 'undefined') {
-            gsap.fromTo(card, { opacity: 0.4, scale: 0.98 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'power2.out' });
-          } else {
-            card.style.opacity = '1';
+            gsap.fromTo(card, { opacity: 0.3, scale: 0.96 }, { opacity: 1, scale: 1, duration: 0.25, ease: 'power2.out' });
           }
         } else {
+          card.classList.add('is-hidden');
           card.style.display = 'none';
+          card.style.visibility = 'hidden';
+          card.style.opacity = '0';
         }
       });
     });

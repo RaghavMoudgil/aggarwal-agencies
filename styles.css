@@ -1025,11 +1025,17 @@ ul {
   overflow: hidden;
   box-shadow: var(--shadow-sm);
   transition: transform var(--transition-normal), box-shadow var(--transition-normal);
-  display: flex !important;
+  display: flex;
   flex-direction: column;
   position: relative;
-  opacity: 1 !important;
-  visibility: visible !important;
+  opacity: 1;
+  visibility: visible;
+}
+
+.category-card.is-hidden {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
 }
 
 .category-card:hover {

@@ -83,6 +83,23 @@ describe('Aggarwal Agencies - Site Integrity & Integration Tests', () => {
         );
       });
     });
+
+    it('should verify every category tab filter button corresponds to matching category cards', () => {
+      const buttonFilterMatches = [...htmlContent.matchAll(/data-filter="([^"]+)"/g)].map(m => m[1]);
+      const cardCategoryMatches = new Set([...htmlContent.matchAll(/data-category="([^"]+)"/g)].map(m => m[1]));
+
+      assert.ok(buttonFilterMatches.length >= 6, 'Should have multiple filter buttons');
+      assert.ok(buttonFilterMatches.includes('all'), 'Should have "all" filter');
+
+      buttonFilterMatches.forEach(filter => {
+        if (filter !== 'all') {
+          assert.ok(
+            cardCategoryMatches.has(filter),
+            `Category button for '${filter}' must have matching cards with data-category='${filter}'`
+          );
+        }
+      });
+    });
   });
 
   describe('3. Local Assets & File System Verification', () => {

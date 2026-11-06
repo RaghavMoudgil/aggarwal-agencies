@@ -54,7 +54,25 @@ describe('Aggarwal Agencies - CSS & Regression Prevention Tests', () => {
     });
   });
 
-  describe('3. Responsive Media Queries', () => {
+  describe('3. Category Card Filter Integrity', () => {
+    it('should NOT force display: flex !important on .category-card (allows tab filtering)', () => {
+      assert.doesNotMatch(
+        css,
+        /\.category-card\s*\{[^}]*display:\s*flex\s*!important/i,
+        '.category-card must not have display: flex !important so filtering can hide unselected categories'
+      );
+    });
+
+    it('should define .category-card.is-hidden with display: none !important', () => {
+      assert.match(
+        css,
+        /\.category-card\.is-hidden\s*\{[^}]*display:\s*none\s*!important/i,
+        '.category-card.is-hidden must be display: none !important'
+      );
+    });
+  });
+
+  describe('4. Responsive Media Queries', () => {
     it('should define tablet & mobile navigation collapse breakpoint at 992px', () => {
       assert.ok(
         css.includes('@media (max-width: 992px)'),
