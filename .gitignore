@@ -1,0 +1,11 @@
+# OS and editor files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+.vscode/
+.idea/
+
+# Local runner files
+powershell.cmd
+*.log
