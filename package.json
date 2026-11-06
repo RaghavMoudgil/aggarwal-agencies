@@ -1,0 +1,18 @@
+{
+  "name": "aggarwal-agencies",
+  "version": "1.0.0",
+  "description": "Aggarwal Agencies - Bulk Toy Wholesaler & Distributor Digital Flagship",
+  "main": "index.html",
+  "scripts": {
+    "test": "node tests/run-all.js",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "aggarwal-agencies",
+    "toy-wholesaler",
+    "ambala",
+    "b2b"
+  ],
+  "author": "Vipin Aggarwal",
+  "license": "ISC"
+}

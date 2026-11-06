@@ -263,47 +263,41 @@ document.addEventListener('DOMContentLoaded', () => {
       qtyDisplay.textContent = `${qty} Units`;
     }
 
-    let tierName = 'Silver Partner';
-    let discount = '15%';
-    let estimatedMargin = '35% - 40%';
-    let dispatchDays = '24-48 Hours';
-
-    if (qty >= 1000) {
-      tierName = 'Diamond Super-Stockist';
-      discount = '35% Extra Off Factory Price';
-      estimatedMargin = '50% - 60%';
-      dispatchDays = 'Priority 24 Hours Express Freight';
-    } else if (qty >= 500) {
-      tierName = 'Platinum Wholesaler';
-      discount = '28% Extra Off Factory Price';
-      estimatedMargin = '45% - 52%';
-      dispatchDays = '24-36 Hours';
-    } else if (qty >= 200) {
-      tierName = 'Gold Bulk Retailer';
-      discount = '22% Extra Off Factory Price';
-      estimatedMargin = '40% - 45%';
-      dispatchDays = '24-48 Hours';
+    const logic = window.AggarwalLogic;
+    let tierData;
+    if (logic && typeof logic.calculateWholesaleTier === 'function') {
+      tierData = logic.calculateWholesaleTier(qty, selectedToy);
     } else {
-      tierName = 'Silver Starter Lot';
-      discount = '15% Off Wholesale Price';
-      estimatedMargin = '35% - 40%';
-      dispatchDays = '48 Hours';
+      tierData = {
+        tierName: qty >= 1000 ? 'Diamond Super-Stockist' : (qty >= 500 ? 'Platinum Wholesaler' : (qty >= 200 ? 'Gold Bulk Retailer' : 'Silver Starter Lot')),
+        discount: qty >= 1000 ? '35% Extra Off Factory Price' : (qty >= 500 ? '28% Extra Off Factory Price' : (qty >= 200 ? '22% Extra Off Factory Price' : '15% Off Wholesale Price')),
+        estimatedMargin: qty >= 1000 ? '50% - 60%' : (qty >= 500 ? '45% - 52%' : (qty >= 200 ? '40% - 45%' : '35% - 40%')),
+        dispatchDays: qty >= 1000 ? 'Priority 24 Hours Express Freight' : (qty >= 500 ? '24-36 Hours' : '24-48 Hours')
+      };
     }
 
-    if (tierDisplay) tierDisplay.textContent = tierName;
-    if (discountDisplay) discountDisplay.textContent = discount;
-    if (marginDisplay) marginDisplay.textContent = estimatedMargin;
-    if (dispatchDisplay) dispatchDisplay.textContent = dispatchDays;
+    if (tierDisplay) tierDisplay.textContent = tierData.tierName;
+    if (discountDisplay) discountDisplay.textContent = tierData.discount;
+    if (marginDisplay) marginDisplay.textContent = tierData.estimatedMargin;
+    if (dispatchDisplay) dispatchDisplay.textContent = tierData.dispatchDays;
 
     if (calcWhatsAppBtn) {
-      const waMsg = encodeURIComponent(
-        `Hello Aggarwal Agencies! I am interested in bulk ordering:\n` +
-        `• Category: ${selectedToy}\n` +
-        `• Quantity: ${qty} units\n` +
-        `• Tier: ${tierName}\n` +
-        `Please share the wholesale price list and catalog for my store.`
-      );
-      calcWhatsAppBtn.href = `https://wa.me/919813387465?text=${waMsg}`;
+      if (logic && typeof logic.buildWhatsAppUrl === 'function') {
+        calcWhatsAppBtn.href = logic.buildWhatsAppUrl({
+          category: selectedToy,
+          qty: qty,
+          tierName: tierData.tierName
+        });
+      } else {
+        const waMsg = encodeURIComponent(
+          `Hello Aggarwal Agencies! I am interested in bulk ordering:\n` +
+          `• Category: ${selectedToy}\n` +
+          `• Quantity: ${qty} units\n` +
+          `• Tier: ${tierData.tierName}\n` +
+          `Please share the wholesale price list and catalog for my store.`
+        );
+        calcWhatsAppBtn.href = `https://wa.me/919813387465?text=${waMsg}`;
+      }
     }
   }
 

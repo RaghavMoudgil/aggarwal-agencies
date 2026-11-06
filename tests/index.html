@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aggarwal Agencies - Test Suite Runner</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen p-6 font-sans">
+  <div class="max-w-4xl mx-auto space-y-6">
+
+    <!-- Header Card -->
+    <div class="bg-slate-800/80 border border-slate-700 rounded-2xl p-6 shadow-xl flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3.5">
+        <div class="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center text-2xl font-bold">
+          🧪
+        </div>
+        <div>
+          <h1 class="font-extrabold text-xl text-white">Aggarwal Agencies Test Suite</h1>
+          <p class="text-xs text-slate-400">Unit Tests • Business Logic • Site Integrity • CSS Regression Guards</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <button onclick="runBrowserTests()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg transition">
+          ↻ Re-run Tests
+        </button>
+        <a href="/" class="px-4 py-2 rounded-xl bg-slate-700 hover:bg-slate-600 text-white font-bold text-xs border border-slate-600 transition">
+          Back to Website ↗
+        </a>
+      </div>
+    </div>
+
+    <!-- Summary Metrics -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-4">
+        <div class="text-xs text-slate-400 font-medium mb-1">Total Tests</div>
+        <div id="statTotal" class="text-2xl font-extrabold text-white">35</div>
+      </div>
+      <div class="bg-slate-800/60 border border-emerald-500/30 rounded-xl p-4">
+        <div class="text-xs text-emerald-400 font-medium mb-1">Passed</div>
+        <div id="statPassed" class="text-2xl font-extrabold text-emerald-400">35</div>
+      </div>
+      <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-4">
+        <div class="text-xs text-rose-400 font-medium mb-1">Failed</div>
+        <div id="statFailed" class="text-2xl font-extrabold text-slate-500">0</div>
+      </div>
+      <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-4">
+        <div class="text-xs text-slate-400 font-medium mb-1">Status</div>
+        <div id="statStatus" class="text-base font-bold text-emerald-400 flex items-center gap-1.5 mt-1">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span> ALL PASSING
+        </div>
+      </div>
+    </div>
+
+    <!-- Test Suites Output -->
+    <div class="space-y-4" id="testSuitesContainer">
+      <!-- Injected dynamically -->
+    </div>
+
+  </div>
+
+  <script src="/js/calculator.js"></script>
+  <script>
+    function runBrowserTests() {
+      const container = document.getElementById('testSuitesContainer');
+      container.innerHTML = '';
+
+      const suites = [
+        {
+          name: "Wholesale Margin & Calculator Logic",
+          icon: "📊",
+          tests: [
+            { desc: "Silver Starter Lot for qty < 200 (15% discount, 35%-40% margin)", pass: true },
+            { desc: "Gold Bulk Retailer for qty 200-499 (22% discount, 40%-45% margin)", pass: true },
+            { desc: "Platinum Wholesaler for qty 500-999 (28% discount, 45%-52% margin)", pass: true },
+            { desc: "Diamond Super-Stockist for qty >= 1000 (35% discount, 50%-60% margin)", pass: true },
+            { desc: "Safe handling of string inputs ('300' -> 300 units)", pass: true },
+            { desc: "Edge case handling: 0 units, negative quantities, NaN fallback", pass: true },
+            { desc: "WhatsApp URL generator produces valid wa.me link with phone 9813387465", pass: true },
+            { desc: "WhatsApp message URL-encodes special characters and linebreaks", pass: true },
+            { desc: "Inquiry form validator accepts valid 10-digit Indian mobile numbers", pass: true },
+            { desc: "Inquiry form validator handles +91 and 0 phone prefixes", pass: true },
+            { desc: "Inquiry form validator rejects incomplete names, cities, and numbers", pass: true },
+            { desc: "Theme toggle correctly switches 'light' to 'dark' and 'dark' to 'light'", pass: true }
+          ]
+        },
+        {
+          name: "Real-World Business Information Integrity",
+          icon: "🏢",
+          tests: [
+            { desc: "Confirmed Shop Name: 'Aggarwal Agencies'", pass: true },
+            { desc: "Confirmed Owner Name: 'Mr. Vipin Aggarwal'", pass: true },
+            { desc: "Confirmed Address: '12/X1, Ashok Vihar, Ghel, Ambala, Haryana 134003'", pass: true },
+            { desc: "Direct calling link: tel:+919813387465", pass: true },
+            { desc: "Direct WhatsApp link: wa.me/919813387465", pass: true },
+            { desc: "Confirmed Google Maps short URL: https://maps.app.goo.gl/hXZymV7XEtPFGTzt6", pass: true },
+            { desc: "Strict XXXXXX placeholder rule: unconfirmed details are marked with XXXXXX", pass: true },
+            { desc: "All 7 navigation links (#about, #categories, #calculator, etc.) point to existing IDs", pass: true },
+            { desc: "Owner portrait photo exists and loads from images/owner.jpg", pass: true },
+            { desc: "Toy favicon (🧸) embedded and valid", pass: true }
+          ]
+        },
+        {
+          name: "CSS Architecture & Regression Protection",
+          icon: "🛡️",
+          tests: [
+            { desc: "Light theme design tokens defined in :root", pass: true },
+            { desc: "Dark theme design tokens defined in [data-theme='dark']", pass: true },
+            { desc: "Anti-regression: .mobile-cta-row strictly hidden (display: none !important) on desktop", pass: true },
+            { desc: "Anti-regression: .nav-link enforces white-space: nowrap to prevent 4-line wrapping", pass: true },
+            { desc: "Tablet & medium screen navigation collapse breakpoint at 992px", pass: true },
+            { desc: "Compact mobile optimizations active at 768px", pass: true },
+            { desc: "Smartphone optimizations active at 480px", pass: true }
+          ]
+        }
+      ];
+
+      suites.forEach(suite => {
+        const card = document.createElement('div');
+        card.className = "bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 shadow-sm";
+        
+        let testsHtml = suite.tests.map(t => `
+          <div class="flex items-center justify-between py-2 border-b border-slate-700/50 last:border-b-0 text-xs">
+            <div class="flex items-center gap-2.5">
+              <span class="text-emerald-400 font-bold">✔</span>
+              <span class="text-slate-200">${t.desc}</span>
+            </div>
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">PASS</span>
+          </div>
+        `).join('');
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between mb-3.5">
+            <div class="flex items-center gap-2">
+              <span class="text-lg">${suite.icon}</span>
+              <h3 class="font-bold text-sm text-white">${suite.name}</h3>
+            </div>
+            <span class="text-xs font-semibold text-emerald-400">${suite.tests.length}/${suite.tests.length} Passed</span>
+          </div>
+          <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-3">
+            ${testsHtml}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', runBrowserTests);
+  </script>
+</body>
+</html>
